@@ -36,6 +36,8 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
+          exit 1
+
   notify-slack:
     if: ${{ always() && !cancelled() && needs.prereq.result == 'failure' }}
     runs-on: ubuntu-latest
