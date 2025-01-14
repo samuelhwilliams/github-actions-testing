@@ -46,9 +46,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run view ${{ github.run_id }}
+          gh run view --repo ${{ github.repository }} ${{ github.run_id }}
         
-          (gh run view ${{ github.run_id }} | grep "The deployment was rejected or didn't satisfy other protection rules.") && rejected=true || rejected=false
+          (gh run view --repo ${{ github.repository }} ${{ github.run_id }} | grep "The deployment was rejected or didn't satisfy other protection rules.") && rejected=true || rejected=false
 
           echo "manually-rejected=${rejected}" >> "$GITHUB_OUTPUT"
       - name: Report on manual rejection
