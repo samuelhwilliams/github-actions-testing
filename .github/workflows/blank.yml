@@ -50,8 +50,8 @@ jobs:
           (
             gh workflow view ${{ github.run_id }} \
             | grep "The deployment was rejected or didn't satisfy other protection rules." \
-            && echo "manually-rejected=false" >> "$GITHUB_OUTPUT"
-          ) || echo "manually-rejected=true" >> "$GITHUB_OUTPUT"
+            && echo "manually-rejected=true" >> "$GITHUB_OUTPUT"
+          ) || echo "manually-rejected=false" >> "$GITHUB_OUTPUT"
       - name: Report on manual rejection
         if: ${{ steps.check-for-rejection.outputs.manually-rejected == 'true' }}
         run: |
