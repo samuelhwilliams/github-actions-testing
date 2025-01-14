@@ -49,6 +49,10 @@ jobs:
             | grep "The deployment was rejected or didn't satisfy other protection rules." \
             && echo "manually-rejected=false" >> "$GITHUB_OUTPUT"
           ) || echo "manually-rejected=true" >> "$GITHUB_OUTPUT"
+      - name: Report on manual rejection
+        if: ${{ steps.check-for-rejection.outputs.manually-rejected == 'false' }}
+        run: |
+          echo 'workflow manually rejected by developer'
       - name: Send message to Slack (push)
         if: ${{ github.event_name == 'push' && steps.check-for-rejection.outputs.manually-rejected == 'false' }}
         run: |
