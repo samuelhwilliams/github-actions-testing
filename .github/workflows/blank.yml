@@ -44,6 +44,8 @@ jobs:
       - name: Check if deployment was manually rejected
         id: check-for-rejection
         run: |
+          gh run view ${{ github.run_id }}
+        
           (gh run view ${{ github.run_id }} | grep "The deployment was rejected or didn't satisfy other protection rules.") && rejected=true || rejected=false
 
           echo "manually-rejected=${rejected}" >> "$GITHUB_OUTPUT"
