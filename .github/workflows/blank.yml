@@ -37,7 +37,7 @@ jobs:
           echo test, and deploy your project.
 
   notify-slack:
-    if: ${{ always() && !cancelled && needs.prereq.result == 'failure' }}
+    if: ${{ always() && !cancelled() && needs.prereq.result == 'failure' }}
     runs-on: ubuntu-latest
     needs: [ prereq ]
     steps:
