@@ -1,0 +1,30 @@
+name: Send a slack message
+
+inputs:
+  message:
+    required: true
+    type: string
+  SLACK_BOT_TOKEN:
+    required: true
+    type: string
+  SLACK_NOTIFICATION_CHANNEL_ID:
+    required: true
+    type: string
+
+outputs:
+    thread_ts:
+      description: "Identifier for the slack message thread created"
+      value: ${{ steps.slack_message.outputs.ts }}
+
+runs:
+    using: "composite"
+    steps:
+      - name: Send message to Slack (workflow_dispatch)
+        id: slack_message
+        uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_NOTIFICATION_CHANNEL_ID }}
+            text: ${{ inputs.message }}
